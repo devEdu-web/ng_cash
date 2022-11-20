@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  postgres: 
+    image: postgres
+    container_name: postgres_container
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+  api:
+    container_name: ng_cash_container
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - 5000:5000
+    
+volumes:
+  pgdata:
