@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getUserBalanceController } from "../controllers";
-import { authMiddlewares } from '../middlewares/'
+import { authMiddlewares } from "../middlewares/";
 
 const userRouter = Router();
 

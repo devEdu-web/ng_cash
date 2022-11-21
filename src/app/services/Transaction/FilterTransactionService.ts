@@ -14,10 +14,10 @@ export class FilterTransactionService {
           await this.TransactionRepository.getUserCashInTransactions(userId);
         return cashInTransactions;
       } else {
-        throw new Error('Invalid Operation')
+        throw new Error("Invalid Operation");
       }
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

@@ -52,8 +52,29 @@ interface ITransactionRepository {
     creditedAccountId: number,
     value: Prisma.Decimal
   ): Promise<ITransaction>;
+  getTransactions(userId: number): Promise<ITransactionDbPayload[]>;
+  getUserCashOutTransactions(userId: number): Promise<ITransactionDbPayload[]>;
+  getUserCashInTransactions(userId: number): Promise<ITransactionDbPayload[]>;
+}
+
+interface ITransactionDbPayload {
+  value: Prisma.Decimal;
+  debitedAccount: {
+    user: {
+      username: string;
+    } | null;
+  };
+  creditedAccount: {
+    user: {
+      username: string;
+    } | null;
+  };
+  createdAt: Date;
+  id: number;
+  debitedAccountId: number;
+  creditedAccountId: number;
 }
 
 interface IFilterTransactionParams {
-  operation: TOperation
+  operation: TOperation;
 }

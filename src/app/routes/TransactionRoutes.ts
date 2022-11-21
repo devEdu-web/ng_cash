@@ -3,7 +3,7 @@ import { ITransactionPayload } from "../../types";
 import {
   createTransactionController,
   filterTransactionController,
-  getUserTransactionsController
+  getUserTransactionsController,
 } from "../controllers";
 import { authMiddlewares, transactionMiddlewares } from "../middlewares";
 
@@ -20,19 +20,15 @@ transactionRouter.post(
   }
 );
 
-transactionRouter.get(
-  "/all",
-  authMiddlewares.requireUser,
-  (req, res) => {
-    return getUserTransactionsController.handle(req, res)
-  }
-)
+transactionRouter.get("/all", authMiddlewares.requireUser, (req, res) => {
+  return getUserTransactionsController.handle(req, res);
+});
 
 transactionRouter.get(
   "/filter/:operation",
   authMiddlewares.requireUser,
   (req, res) => {
-    return filterTransactionController.handle(req, res)
+    return filterTransactionController.handle(req, res);
   }
 );
 

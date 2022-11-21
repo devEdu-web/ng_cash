@@ -27,11 +27,9 @@ export class TransactionMiddlewares {
     }
 
     if (debitedAccountInfo.username == creditedAccountInfo?.username) {
-      return res
-        .status(400)
-        .json({
-          message: "Debited account and credited account can't be the same.",
-        });
+      return res.status(400).json({
+        message: "Debited account and credited account can't be the same.",
+      });
     }
 
     res.locals.debitedAccount = debitedAccountInfo;

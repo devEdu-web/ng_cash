@@ -1,4 +1,4 @@
-import { ITransaction, ITransactionRepository } from "../../types";
+import { ITransaction, ITransactionDbPayload, ITransactionRepository } from "../../types";
 import Client from "../../database/client";
 import { Prisma } from "@prisma/client";
 
@@ -21,18 +21,18 @@ export class TransactionRepository implements ITransactionRepository {
       throw error;
     }
   }
-  async getTransactions(userId: number) {
+  async getTransactions(userId: number): Promise<ITransactionDbPayload[]> {
     try {
       const userTransactions = await Client.transaction.findMany({
         where: {
           OR: [
             {
-              debitedAccountId: userId
+              debitedAccountId: userId,
             },
             {
-              creditedAccountId: userId
-            }
-          ]
+              creditedAccountId: userId,
+            },
+          ],
         },
         select: {
           id: true,
@@ -44,28 +44,28 @@ export class TransactionRepository implements ITransactionRepository {
             select: {
               user: {
                 select: {
-                  username: true
-                }
-              }
-            }
+                  username: true,
+                },
+              },
+            },
           },
           debitedAccount: {
             select: {
-              user:{
+              user: {
                 select: {
-                  username: true
-                }
-              }
-            }
-          }
-        }
-      })
-      return userTransactions
+                  username: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return userTransactions;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
-  async getUserCashOutTransactions(userId: number) {
+  async getUserCashOutTransactions(userId: number): Promise<ITransactionDbPayload[]> {
     try {
       const transactions = await Client.transaction.findMany({
         where: {
@@ -102,7 +102,7 @@ export class TransactionRepository implements ITransactionRepository {
       throw error;
     }
   }
-  async getUserCashInTransactions(userId: number) {
+  async getUserCashInTransactions(userId: number): Promise<ITransactionDbPayload[]> {
     try {
       const transactions = await Client.transaction.findMany({
         where: {
